@@ -3,6 +3,7 @@ package com.lxqljc.navigation_demo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,20 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        //方法一：
+//        view.findViewById(R.id.btnToSecondFragment).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_secondFragment2);
+//            }
+//        });
+        //方法二：
+        Bundle bundle = new MainFragmentArgs.Builder().setUserName("张三").setAge(12).build().toBundle();
+        view.findViewById(R.id.btnToSecondFragment).
+                setOnClickListener(
+                        Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_secondFragment2,bundle));
+
+        return view;
     }
 }
